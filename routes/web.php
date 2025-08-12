@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\ItemController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\TransactionController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -37,3 +38,14 @@ Route::middleware(['auth', 'is_admin'])
     Route::delete('categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 
     });
+
+    Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('suppliers', App\Http\Controllers\Admin\SupplierController::class);
+});
+
+Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
+    Route::get('transactions', [TransactionController::class, 'index'])->name('transactions.index');
+    Route::post('transactions', [TransactionController::class, 'store'])->name('transactions.store');
+    Route::put('transactions/{transaction}', [TransactionController::class, 'update'])->name('transactions.update');
+    Route::delete('transactions/{transaction}', [TransactionController::class, 'destroy'])->name('transactions.destroy');
+});
