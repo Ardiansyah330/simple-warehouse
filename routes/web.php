@@ -56,7 +56,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::put('orders/{order}', [OrderController::class, 'update'])->name('orders.update');
     Route::delete('orders/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
 
-    // Tambahan untuk approve & reject
     Route::put('orders/{order}/approve', [OrderController::class, 'approve'])->name('orders.approve');
     Route::put('orders/{order}/reject', [OrderController::class, 'reject'])->name('orders.reject');
 });
